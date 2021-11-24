@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Read Text File Tutorial</title>
+  </head>
+  <body>
+    <input type="file" onchange="loadFile(this.files[0])">
+    <br>
+    <br>
+        <div class="row">
+            <div class="col-md-6">
+                <table border="0" class="table table-bordered">
+                    <theah>
+                        <tr>
+                            <td>11 Name Point</td>
+                            <td>21</td>
+                            <td>22</td>
+                            <td>31</td>
+                        </tr>
+                    </theah>
+                    <tbody id="res"></tbody>
+                </table>
+            </div>
+            <div class="col-md-6">
+                <table border="" class="table table-bordered">
+                    <th>
+                        <td>11</td>
+                        <td>84</td>
+                        <td>85</td>
+                        <td>86</td>
+                    </th>
+                    <tbody id="res1"></tbody>
+                </table>
+            </div>
+        </div>
+    <script>
+
+        const nmaePoint = 11;
+        const horizental = 21;
+        const vertical = 22;
+        const dr = 31;
+        const x_est = 84;
+        const y_est = 85;
+        const z_est = 86;
+
+        let arr = []
+
+        var htmlRes = document.querySelector('#res')
+
+
+        async function loadFile(file) {
+
+            let text = await file.text();
+            
+            // htmlRes.textContent = text;
+            
+            
+            arr.push(text.split("\n"));
+
+            // console.log(arr)
+
+            arr.map(data => {
+                // console.log(data)
+                // console.log(data[1].split(" "))
+                // console.log(data[4].split(" ")[4].slice(0, 2), data[4].split(" ")[4].slice(9, 16))
+
+                data.map(col => {
+                    // console.log(col.split(" "))
+
+                    let x = col.split(" \n")
+
+                    x.map((res, index) => {
+
+                        // console.log(res.slice(16, 31))
+
+                        // first table : 
+
+                        if(
+                            (res.slice(0, 2) == 11) &&
+                            (res.slice(16, 18) == 21) &&
+                            (res.slice(32, 34) == 22) && 
+                            (res.slice(48, 50) == 31)
+                            ) {
+
+                            // console.log(res.slice(16, 31))
+
+                            return document.querySelector("#res").innerHTML += 
+                            `
+                            <tr>
+                                <td>${res.slice(7, 15)}</td>
+                                <td>${res.slice(23, 31)}</td>
+                                <td>${res.slice(39, 47)}</td>
+                                <td>${res.slice(55, 63)}</td>
+                            </tr>
+                            `
+                            
+                        }
+
+                        // second table :
+
+                        if(
+                            (res.slice(0, 2) == 11) &&
+                            (res.slice(16, 18) == 84) &&
+                            (res.slice(32, 34) == 85) && 
+                            (res.slice(48, 50) == 86)
+                        ) {
+
+                            return document.querySelector("#res1").innerHTML += 
+                            `
+                            <tr>
+                                <td>${res.slice(7, 15)}</td>
+                                <td>${res.slice(16, 31)}</td>
+                                <td>${res.slice(39, 47)}</td>
+                                <td>${res.slice(55, 63)}</td>
+                            </tr>
+                            `
+
+                        }
+
+                    })
+
+                })
+            })
+        
+            
+        }
+
+        // console.log(arr)
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </body>
+</html>
